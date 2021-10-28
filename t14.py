@@ -14,7 +14,7 @@ conn=sqlite3.connect('address_book.db')
 #Create Cursor
 c=conn.cursor()
 #Commit Change
-c.execute('CREATE TABLE addresses(first_name text,last_name text,address text,city text,state text,zipcode integers)')
+#c.execute('CREATE TABLE addresses(first_name text,last_name text,address text,city text,state text,zipcode integers)')
 
 conn.commit()
 #Close 
@@ -47,6 +47,24 @@ def submit():
     city.delete(0,END)
     state.delete(0,END)
     zip.delete(0,END)
+
+def query():
+    conn=sqlite3.connect('address_book.db')
+    #Create Cursor
+    c=conn.cursor()
+    #query the database
+    c.execute('SELECT *,oid FROM addresses')
+    rec=c.fetchall()
+   # print(rec)
+    print_records=''
+    for record in rec:
+        print_records+= str(record) + '\n'
+        query_label=Label(root,text=print_records)
+        query_label.grid(row=8,column=0,columnspan=2)
+    conn.commit()
+    #Close 
+    conn.close()
+
 
 #Create text books
 first_name=Entry(root,width=30)
@@ -90,5 +108,9 @@ zip_label.grid(row=5,column=0)
 #Create Submit Button
 submit_button=Button(root,text='Add Record to Database',command=submit)
 submit_button.grid(row=6,column=0,columnspan=2,pady=10,padx=10,ipadx=100)
+
+#Create a query button
+query_b=Button(root,text='Show Records',command=query)
+query_b.grid(row=7,column=0,columnspan=2,padx=10,pady=10,ipadx=137)
 
 root.mainloop()
