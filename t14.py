@@ -14,20 +14,12 @@ conn=sqlite3.connect('address_book.db')
 #Create Cursor
 c=conn.cursor()
 #Commit Change
+c.execute('CREATE TABLE addresses(first_name text,last_name text,address text,city text,state text,zipcode integers)')
+
 conn.commit()
 #Close 
 conn.close()
 #Create Table
-'''
-c.execute("""CREATE TABLE addresses(
-    first_name text,
-    last_name text,
-    address text,
-    city text,
-    state text,
-    zipcode integers)
-""")
-''' 
 
 def submit():
     conn=sqlite3.connect('address_book.db')
@@ -73,7 +65,7 @@ state=Entry(root,width=30)
 state.grid(row=4,column=1,padx=20)
 
 zip=Entry(root,width=30)
-zip.grid(row=4,column=1,padx=20)
+zip.grid(row=5,column=1,padx=20)
 
 #Create text box label
 
